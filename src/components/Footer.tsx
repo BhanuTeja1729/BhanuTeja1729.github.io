@@ -11,7 +11,7 @@ export default function Footer() {
             <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-4">
               BT
             </h3>
-            <p className="text-gray-400">Full Stack Developer crafting beautiful web experiences.</p>
+            <p className="text-gray-400">Full Stack Developer building intuitive and scalable web solutions</p>
           </div>
 
           <div>
@@ -21,16 +21,6 @@ export default function Footer() {
               <li><button className="hover:text-blue-400 transition-colors">Projects</button></li>
               <li><button className="hover:text-blue-400 transition-colors">Skills</button></li>
               <li><button className="hover:text-blue-400 transition-colors">Contact</button></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold mb-4">Technologies</h4>
-            <ul className="space-y-2 text-gray-400 text-sm">
-              <li>React & TypeScript</li>
-              <li>Node.js & Express</li>
-              <li>MongoDB & PostgreSQL</li>
-              <li>IoT & Real-time Systems</li>
             </ul>
           </div>
 
