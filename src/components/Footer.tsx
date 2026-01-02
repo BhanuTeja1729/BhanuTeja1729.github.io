@@ -3,10 +3,17 @@ import { Github, Linkedin, Mail, Heart } from 'lucide-react';
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <footer className="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-4 gap-8 mb-8">
+        <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
             <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-4">
               BT
@@ -17,10 +24,10 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-gray-400">
-              <li><button className="hover:text-blue-400 transition-colors">About</button></li>
-              <li><button className="hover:text-blue-400 transition-colors">Projects</button></li>
-              <li><button className="hover:text-blue-400 transition-colors">Skills</button></li>
-              <li><button className="hover:text-blue-400 transition-colors">Contact</button></li>
+              <li><button onClick={() => scrollToSection('about')} className="hover:text-blue-400 transition-colors">About</button></li>
+              <li><button onClick={() => scrollToSection('projects')} className="hover:text-blue-400 transition-colors">Projects</button></li>
+              <li><button onClick={() => scrollToSection('skills')} className="hover:text-blue-400 transition-colors">Skills</button></li>
+              <li><button onClick={() => scrollToSection('contact')} className="hover:text-blue-400 transition-colors">Contact</button></li>
             </ul>
           </div>
 
