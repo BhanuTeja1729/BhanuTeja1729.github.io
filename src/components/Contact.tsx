@@ -8,6 +8,8 @@ export default function Contact() {
     message: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -16,11 +18,39 @@ export default function Contact() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
-    setFormData({ name: '', email: '', message: '' });
+    setLoading(true);
+    setError('');
+    setSubmitted(false);
+
+    // Use environment variable for API URL, fallback to localhost for development
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
+    try {
+      const response = await fetch(`${apiUrl}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setSubmitted(true);
+        setFormData({ name: '', email: '', message: '' });
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        setError(data.message || 'Failed to send message. Please try again.');
+      }
+    } catch (err) {
+      console.error('Error sending message:', err);
+      setError('Failed to send message. Please make sure the server is running.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -145,15 +175,22 @@ export default function Contact() {
 
             <button
               type="submit"
-              className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all hover:scale-105"
+              disabled={loading}
+              className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
-              Send Message
+              {loading ? 'Sending...' : 'Send Message'}
               <Send size={20} />
             </button>
 
             {submitted && (
               <div className="p-4 bg-green-50 border-2 border-green-200 text-green-700 rounded-lg text-center font-semibold">
                 Message sent successfully! I'll get back to you soon.
+              </div>
+            )}
+
+            {error && (
+              <div className="p-4 bg-red-50 border-2 border-red-200 text-red-700 rounded-lg text-center font-semibold">
+                {error}
               </div>
             )}
           </form>
