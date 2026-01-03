@@ -45,7 +45,7 @@ app.post('/api/contact', async (req, res) => {
   // Email options
   const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: [process.env.EMAIL_USER, email], // Send to both yourself and the form submitter
+    to: process.env.EMAIL_USER, // Send to yourself
     subject: `Portfolio Contact Form: Message from ${name}`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
