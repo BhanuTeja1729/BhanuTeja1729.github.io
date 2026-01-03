@@ -16,14 +16,14 @@ export default function Footer() {
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
             <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-4">
-              BT
+              Bhanu Teja
             </h3>
             <p className="text-gray-400">Full Stack Developer building intuitive and scalable web solutions</p>
           </div>
 
           <div>
             <h4 className="font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2 text-gray-400">
+            <ul className="md:flex md:gap-12 text-gray-400">
               <li><button onClick={() => scrollToSection('about')} className="hover:text-blue-400 transition-colors">About</button></li>
               <li><button onClick={() => scrollToSection('projects')} className="hover:text-blue-400 transition-colors">Projects</button></li>
               <li><button onClick={() => scrollToSection('skills')} className="hover:text-blue-400 transition-colors">Skills</button></li>
@@ -50,7 +50,7 @@ export default function Footer() {
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-sm">
             <p>
-              Made with <Heart size={16} className="inline text-red-500 mx-1" /> by Yarramaddu BhanuTeja Reddy
+              Made by Yarramaddu BhanuTeja Reddy
             </p>
             <p>&copy; {currentYear} All rights reserved.</p>
           </div>
