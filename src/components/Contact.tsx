@@ -1,5 +1,6 @@
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -24,30 +25,24 @@ export default function Contact() {
     setError('');
     setSubmitted(false);
 
-    // Use environment variable for API URL, fallback to localhost for development
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
-
     try {
-      const response = await fetch(`${apiUrl}/api/contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
         },
-        body: JSON.stringify(formData),
-      });
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
 
-      const data = await response.json();
-
-      if (response.ok && data.success) {
-        setSubmitted(true);
-        setFormData({ name: '', email: '', message: '' });
-        setTimeout(() => setSubmitted(false), 5000);
-      } else {
-        setError(data.message || 'Failed to send message. Please try again.');
-      }
+      setSubmitted(true);
+      setFormData({ name: '', email: '', message: '' });
+      setTimeout(() => setSubmitted(false), 5000);
     } catch (err) {
       console.error('Error sending message:', err);
-      setError('Failed to send message. Please make sure the server is running.');
+      setError('Failed to send message. Please try again later.');
     } finally {
       setLoading(false);
     }
